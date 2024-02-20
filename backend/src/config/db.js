@@ -1,11 +1,8 @@
-const { MongoClient } = require('mongodb');
+const mongoose = require("mongoose");
 const mysql = require("mysql");
 
-// Create a new MongoClient
-const mongoClient = new MongoClient(process.env.MONGODB_CONNECTION_STRING);
-
 // Connect to the local MongoDB server
-mongoClient.connect()
+mongoose.connect(process.env.MONGODB_CONNECTION_STRING)
   .then(() => {
     console.log('Connected to local MongoDB');
   })
