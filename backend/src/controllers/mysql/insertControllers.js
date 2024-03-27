@@ -1,5 +1,5 @@
 const express = require('express');
-const inputServices = require('../../services/mysql/inputServices');
+const inputServices = require('../../services/mysql/insertServices');
 const { getSuccessStatus, getErrorStatus } = require('../../helper/statusFunction');
 const { formateInsertData } = require('../../helper/mysql/formateInsertData');
 
