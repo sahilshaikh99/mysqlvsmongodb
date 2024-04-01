@@ -1,0 +1,13 @@
+CREATE TABLE city_temp_individual (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    Region VARCHAR(255) NOT NULL,
+    Country VARCHAR(255) NOT NULL,
+    State VARCHAR(255) DEFAULT '',
+    City VARCHAR(255) NOT NULL,
+    Month INT NOT NULL,
+    Day INT NOT NULL,
+    Year INT NOT NULL,
+    AvgTemperature DECIMAL(10, 2) NOT NULL
+);
+
+

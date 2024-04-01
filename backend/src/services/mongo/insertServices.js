@@ -1,11 +1,28 @@
-const express = require('express');
-const axios = require('axios');
 const CityTempIndividual = require('../../models/rowData/rowDataModel');
-const CityTemperature = require('../../models/SingleCollection/SingleCollectionModel');
+// const {getCSVdata} = require('../../helper/getCSVdata');
 
-const {getCSVdata} = require('../../helper/getCSVdata');
+module.exports.insert = async (volume, callback) => {
+  try {
+    await CityTempIndividual.insertMany([
+      { Region: 'Region1', Country: 'Country1', State: 'State1', City: 'City1', Month: 1, Day: 1, Year: 2024, AvgTemperature: 25.5 },
+      { Region: 'Region1', Country: 'Country1', State: 'State1', City: 'City1', Month: 1, Day: 1, Year: 2024, AvgTemperature: 25.5 },
+      { Region: 'Region1', Country: 'Country1', State: 'State1', City: 'City1', Month: 1, Day: 1, Year: 2024, AvgTemperature: 25.5 },
+      { Region: 'Region1', Country: 'Country1', State: 'State1', City: 'City1', Month: 1, Day: 1, Year: 2024, AvgTemperature: 25.5 },
+      { Region: 'Region1', Country: 'Country1', State: 'State1', City: 'City1', Month: 1, Day: 1, Year: 2024, AvgTemperature: 25.5 },
+      { Region: 'Region1', Country: 'Country1', State: 'State1', City: 'City1', Month: 1, Day: 1, Year: 2024, AvgTemperature: 25.5 },
+      { Region: 'Region1', Country: 'Country1', State: 'State1', City: 'City1', Month: 1, Day: 1, Year: 2024, AvgTemperature: 25.5 },
+      { Region: 'Region1', Country: 'Country1', State: 'State1', City: 'City1', Month: 1, Day: 1, Year: 2024, AvgTemperature: 25.5 },
+      { Region: 'Region1', Country: 'Country1', State: 'State1', City: 'City1', Month: 1, Day: 1, Year: 2024, AvgTemperature: 25.5 },
+      { Region: 'Region1', Country: 'Country1', State: 'State1', City: 'City1', Month: 1, Day: 1, Year: 2024, AvgTemperature: 25.5 }
+    ]);
+    return callback(null,);
+  } catch (error) {
+    console.error('Error performing MongoDB operations', error);
+  } 
+}
 
-module.exports.insert =  async (volume, callback) => {
+
+module.exports.insertFromCSV =  async (volume, callback) => {
   try {
         const data = await getCSVdata(volume);
         await CityTempIndividual.insertMany(data);

@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"  # Map container's MongoDB port to host
+    volumes:
+      - /opt/homebrew/var/mongodb  # Mount host directory for MongoDB data persistence
+    # mem_limit: 500m
+
+  mysql:
+    image: mysql
+    ports:
+      - "3306:3306"  # Map container's MySQL port to host
+    environment:
+      MYSQL_ROOT_PASSWORD: sahil@7878  # Set MySQL root password
+    volumes:
+      - /opt/homebrew/var/mysql  # Mount host directory for MySQL data persistence
+    # mem_limit: 400m

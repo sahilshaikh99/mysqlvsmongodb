@@ -26,10 +26,10 @@ module.exports.getCSVdata = async (volume) => {
             Country: data.Country,
             State: data.State || '',
             City: data.City,
-            Month: parseInt(data.Month),
-            Day: parseInt(data.Day),
-            Year: parseInt(data.Year),
-            AvgTemperature: parseFloat(data.AvgTemperature)
+            Month: data.Month,
+            Day: data.Day,
+            Year: data.Year,
+            AvgTemperature: data.AvgTemperature
           };
           temperatures.push(temperatureData);
           recordCount++;

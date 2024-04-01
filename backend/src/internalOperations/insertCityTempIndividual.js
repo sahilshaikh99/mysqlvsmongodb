@@ -54,10 +54,10 @@
 
 
 const express = require('express');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const csv = require('csv-parser');
 const fs = require('fs');
-const CityTempIndividual = require('../models/rowData/rowDataModel');
+// const CityTempIndividual = require('../models/rowData/rowDataModel');
 
 // Initialize Express app
 const app = express();

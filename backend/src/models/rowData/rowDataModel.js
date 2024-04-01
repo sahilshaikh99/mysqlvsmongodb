@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// Define the schema for your data
 const cityTempIndividualSchema = new mongoose.Schema({
     Region: {
         type: String,
@@ -12,7 +11,6 @@ const cityTempIndividualSchema = new mongoose.Schema({
     },
     State: {
         type: String,
-        default: ''
     },
     City: {
         type: String,
@@ -36,7 +34,6 @@ const cityTempIndividualSchema = new mongoose.Schema({
     }
 });
 
-// Create a model for your schema
 const CityTempIndividual = mongoose.model('cityTempIndividual', cityTempIndividualSchema);
 
 module.exports =  CityTempIndividual;

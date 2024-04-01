@@ -9,8 +9,9 @@ dotenv.config({ path: './api/config.env' });
 const db = require('./src/config/db');
 
 
+
 // Function to start the server
-const startServer = () => {
+const startServer = async () => {
   app.listen(process.env.PORT, () => {
     console.log(`Worker ${process.pid} started and listening on port ${process.env.PORT}`);
   });
