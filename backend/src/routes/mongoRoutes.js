@@ -7,7 +7,7 @@ const deleteControllers = require("../controllers/mongo/deleteControllers");
 
 router.get("/insert/:volume", mongoInsertControllers.insert);
 
-router.get("/insertfromcsv/:volume", mongoInsertControllers.insertFromCSV);
+router.get("/insert-from-csv/:volume", mongoInsertControllers.insertFromCSV);
 
 router.get("/insert-nested/:volume", mongoInsertControllers.insertNested);
 

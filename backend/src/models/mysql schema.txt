@@ -11,3 +11,21 @@ CREATE TABLE city_temp_individual (
 );
 
 
+
+CREATE TABLE mydb.city (
+    city_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    country VARCHAR(255) NOT NULL,
+    state VARCHAR(255),
+    region VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE mydb.temperature (
+    temperature_id INT AUTO_INCREMENT PRIMARY KEY,
+    city_id INT NOT NULL,
+    day INT NOT NULL,
+    month INT NOT NULL,
+    year INT NOT NULL,
+    avg_temperature DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (city_id) REFERENCES city(city_id)
+);

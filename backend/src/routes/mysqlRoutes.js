@@ -8,7 +8,11 @@ const deleteControllers = require("../controllers/mysql/deleteControllers");
 
 router.get("/insert/:volume", mysqlInsertControllers.insert);
 
-router.get("/insertfromcsv/:volume", mysqlInsertControllers.insertFromCSV);
+router.get("/insert-from-csv/:volume", mysqlInsertControllers.insertFromCSV);
+
+router.get("/insert-city/:volume", mysqlInsertControllers.insertCityTable);
+
+router.get("/insert-temperature/:volume", mysqlInsertControllers.insertTemperatureTable);
 
 router.get("/select/", selectControllers.select);
 

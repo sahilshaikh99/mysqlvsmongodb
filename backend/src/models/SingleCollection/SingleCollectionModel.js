@@ -25,7 +25,7 @@ const cityTemperatureSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Temperature: [temperatureSchema]
+    Temperatures: [temperatureSchema]
 });
 
 // Create model for city temperature collection
