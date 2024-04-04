@@ -58,7 +58,7 @@ module.exports.insertNested = async (volume, callback) => {
       console.log(`Inserted ${insertedCount} out of ${totalRecords} records.`);
     }
 
-    return callback(null);
+    return callback(null, );
   } catch (error) {
     console.error('Error inserting data into MongoDB:', error);
     return callback({ error: 'Error inserting data into MongoDB' });

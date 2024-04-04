@@ -3,36 +3,32 @@ const mongoose = require('mongoose');
 const cityTempIndividualSchema = new mongoose.Schema({
     Region: {
         type: String,
-        required: true
     },
     Country: {
         type: String,
-        required: true
     },
     State: {
         type: String,
     },
     City: {
         type: String,
-        required: true
+        index: true
     },
     Month: {
         type: Number,
-        required: true
     },
     Day: {
         type: Number,
-        required: true
     },
     Year: {
         type: Number,
-        required: true
     },
     AvgTemperature: {
         type: Number,
-        required: true
     }
 });
+
+
 
 const CityTempIndividual = mongoose.model('cityTempIndividual', cityTempIndividualSchema);
 
