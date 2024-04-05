@@ -32,4 +32,8 @@ router.get("/update2/", updateControllers.update2);
 
 router.get("/delete/", deleteControllers.delete);
 
+router.get("/delete1/", deleteControllers.delete1);
+
+router.get("/delete2/", deleteControllers.delete2);
+
 module.exports = router;
