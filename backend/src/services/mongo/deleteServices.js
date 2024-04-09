@@ -29,7 +29,7 @@ module.exports.delete1 = async (callback) => {
 
 module.exports.delete2 = async (callback) => {
       try {
-            await CityTempIndividual.insertMany(data);
+            await CityTemperature.deleteMany({});
             return callback(null,);
       } catch (error) {
             console.error('Error deleting data into MongoDB:', error);

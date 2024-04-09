@@ -36,13 +36,24 @@ module.exports.delete1 =  async (callback) => {
       }
 }
 
-module.exports.delete2 =  async (callback) => {
+module.exports.delete2 = async (callback) => {
       try {
-            await CityTempIndividual.insertMany(data);
-            return callback(null,);
+          mysqlConnection.query("DELETE FROM temperature", (error, results) => {
+              if (error) {
+                  console.error('Error deleting data from the temperature table:', error);
+                  return callback(error);
+              }
+              mysqlConnection.query("DELETE FROM city", (error, results) => {
+                  if (error) {
+                      console.error('Error deleting data from the city table:', error);
+                      return callback(error);
+                  }
+                  return callback(null);
+              });
+          });
       } catch (error) {
-            console.error('Error deleting data into MySQL:', error);
-            return callback({ error: 'Error deleting data into MySQL' });
+          console.error('Error deleting data from MySQL:', error);
+          return callback({ error: 'Error deleting data from MySQL' });
       }
-}
-    
+  };
+  
