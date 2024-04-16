@@ -5,7 +5,7 @@ const axios = require('axios');
 const mysqlRoutes = require("./routes/mysqlRoutes");
 const mongoRoutes = require("./routes/mongoRoutes");
 
-const internalRoutes = require("./internalOperations/internalRoutes");
+const internalRoutes = require("./routes/experimentDataRoutes");
 
 
 //Routes
