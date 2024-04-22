@@ -1,8 +1,7 @@
-const express = require('express');
 const mysqlConnection = require('../../config/db');
 const {getCSVdata, getCSVCityData, getCSVTemperatureData } = require('../../helper/getCSVdata');
 
-module.exports.insert = async (volume, callback) => {
+module.exports.insert = async (callback) => {
   try {
     mysqlConnection.query(
       "INSERT INTO city_temp_individual (Region, Country, State, City, Month, Day, Year, AvgTemperature) VALUES (?)",
@@ -25,10 +24,43 @@ module.exports.insert = async (volume, callback) => {
   }
 }
 
+module.exports.insert1 = async (callback) => {
+  try {
+    const cityData = [['London', 'United Kingdom', '', 'Europe']];
+    const temperatureData = [[1, 1, 1995, 34.2]];
+  
+    const cityQuery = "INSERT INTO city (name, country, state, region) VALUES ?";
+    const temperatureQuery = "INSERT INTO temperature (city_id, day, month, year, avg_temperature) VALUES ?";
+  
+    mysqlConnection.query(cityQuery, [cityData], (cityError, cityResults) => {
+      if (cityError) {
+        console.error('Error inserting city data:', cityError);
+        return callback(cityError);
+      }
+  
+      const cityId = cityResults.insertId;
+  
+      mysqlConnection.query(temperatureQuery, [temperatureData.map(data => [cityId, ...data])], (tempError, temperatureResults) => {
+        if (tempError) {
+          console.error('Error inserting temperature data:', tempError);
+          return callback(tempError);
+        }
+  
+        // console.log('Data successfully inserted into MySQL.');
+        callback(null);
+      });
+    });
+  } catch (error) {
+    console.error('Error inserting data into MySQL', error);
+    return callback({ error: 'Error inserting data into MySQL' });
+  }
+  
+}
+
 
 module.exports.insertFromCSV = async (volume, callback) => {
   try {
-    const batchSize = 1000; // Adjust batch size as needed
+    const batchSize = 1000; 
     const data = await getCSVdata(volume);
     
     // Convert CSV data into a nested array suitable for bulk insert
@@ -77,7 +109,8 @@ async function performMySQLBulkInsert(values) {
 module.exports.insertCityTable = async (volume, callback) => {
   try {
       const cities = await getCSVCityData(volume);
-      const batchSize = 100; // Adjust batch size as needed
+      console.log(cities);
+      const batchSize = 100; 
       const totalCities = cities.length;
       let insertedCitiesCount = 0;
 
@@ -116,7 +149,7 @@ module.exports.insertTemperatureTable = async (volume, callback) => {
       const cityIdMap = await getCityIdMapFromDB();
       const temperatures = await getCSVTemperatureData(volume, cityIdMap);
 
-      const batchSize = 100; // Adjust batch size as needed
+      const batchSize = 100; 
       const totalTemperatures = temperatures.length;
       let insertedTemperaturesCount = 0;
 

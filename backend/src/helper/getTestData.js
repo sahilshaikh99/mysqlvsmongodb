@@ -13,9 +13,8 @@ function extractTimestamps(filename, startIndex, endIndex) {
         timestamps.push(parseInt(row.timeStamp));
       })
       .on('end', () => {
-        // Extract timestamps for the specified indices
-        const startTimestamp = timestamps[startIndex - 1]; // Adjust index to 0-based
-        const endTimestamp = timestamps[endIndex - 1]; // Adjust index to 0-based
+        const startTimestamp = timestamps[startIndex - 1]; 
+        const endTimestamp = timestamps[endIndex - 1];
         resolve({ startTimestamp, endTimestamp });
       })
       .on('error', (error) => {
@@ -43,7 +42,7 @@ module.exports.processCSVFile = async (filename, stepSize) => {
   while (true) {
     try {
       const { startTimestamp, endTimestamp } = await extractTimestamps(filename, startIndex, endIndex);
-      if (!startTimestamp || !endTimestamp) break; // If either timestamp is undefined, break the loop
+      if (!startTimestamp || !endTimestamp) break; 
       
       // Calculate elapsed time
       const elapsedTime = calculateElapsedTime(startTimestamp, endTimestamp);

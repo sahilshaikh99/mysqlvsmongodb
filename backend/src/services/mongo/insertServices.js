@@ -3,9 +3,8 @@ const CityTemperature = require('../../models/SingleCollection/SingleCollectionM
 
 const {getCSVdata, getCSVdataNested} = require('../../helper/getCSVdata');
 
-module.exports.insert = async (volume, callback) => {
+module.exports.insert = async (callback) => {
   try {
-    // Use create method to insert a single document
     await CityTempIndividual.create({
       Region: 'Region1',
       Country: 'Country1',
@@ -22,10 +21,33 @@ module.exports.insert = async (volume, callback) => {
   } 
 }
 
+module.exports.insert1 = async (callback) => {
+  try {
+    const record = {
+      City: 'London',
+      State: '',
+      Country: 'United Kingdom',
+      Region: 'Europe',
+      Temperatures: [
+          {
+              Day: 1,
+              Month: 1,
+              Year: 1995,
+              AvgTemperature: 34.2
+          }
+      ]
+    }
+
+    await CityTemperature.create(record);
+    return callback(null,);
+  } catch (error) {
+    console.error('Error performing MongoDB operations', error);
+  } 
+}
 
 module.exports.insertFromCSV = async (volume, callback) => {
   try {
-    const batchSize = 1000; // Adjust batch size as needed
+    const batchSize = 1000; 
     const data = await getCSVdata(volume);
     const totalRecords = data.length;
     let insertedCount = 0;
@@ -42,11 +64,11 @@ module.exports.insertFromCSV = async (volume, callback) => {
     console.error('Error inserting data into MongoDB:', error);
     return callback({ error: 'Error inserting data into MongoDB' });
   }
-};
+}
 
 module.exports.insertNested = async (volume, callback) => {
   try {
-    const batchSize = 10; // Adjust batch size as needed
+    const batchSize = 10; 
     const data = await getCSVdataNested(volume);
     const totalRecords = data.length;
     let insertedCount = 0;
@@ -63,4 +85,4 @@ module.exports.insertNested = async (volume, callback) => {
     console.error('Error inserting data into MongoDB:', error);
     return callback({ error: 'Error inserting data into MongoDB' });
   }
-};
+}

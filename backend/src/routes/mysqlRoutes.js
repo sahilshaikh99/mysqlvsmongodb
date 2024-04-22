@@ -6,7 +6,9 @@ const updateControllers = require("../controllers/mysql/updateControllers");
 const deleteControllers = require("../controllers/mysql/deleteControllers");
 
 
-router.get("/insert/:volume", mysqlInsertControllers.insert);
+router.get("/insert/", mysqlInsertControllers.insert);
+
+router.get("/insert1/", mysqlInsertControllers.insert1);
 
 router.get("/insert-from-csv/:volume", mysqlInsertControllers.insertFromCSV);
 
@@ -24,11 +26,15 @@ router.get("/select3/", selectControllers.select3);
 
 router.get("/select4/", selectControllers.select4);
 
+router.get("/select5/", selectControllers.select5);
+
 router.get("/update/", updateControllers.update);
 
 router.get("/update1/", updateControllers.update1);
 
 router.get("/update2/", updateControllers.update2);
+
+router.get("/update3/", updateControllers.update3);
 
 router.get("/delete/", deleteControllers.delete);
 
@@ -36,5 +42,6 @@ router.get("/delete1/", deleteControllers.delete1);
 
 router.get("/delete2/", deleteControllers.delete2);
 
+router.get("/delete3/", deleteControllers.delete3);
 
 module.exports = router;

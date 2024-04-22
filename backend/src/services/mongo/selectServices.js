@@ -1,23 +1,37 @@
-const express = require('express');
+
 const CityTemperature = require('../../models/SingleCollection/SingleCollectionModel');
 const CityTempIndividual = require('../../models/rowData/rowDataModel');
 
+
 module.exports.select =  async (callback) => {
       try {
-             const results =  await CityTempIndividual.findOne({ City: 'Madison' }, { _id: 0, City: 1, Day: 1,
-             Month: 1,
-             Year: 1,
-             AvgTemperature: 1 }).lean();
+             const results =  await CityTempIndividual.findOne({ _id: "6623439a83d7e8f64f6e618c" }, { _id: 1, City: 1, Day: 1,
+              Month: 1,
+              Year: 1,
+              AvgTemperature: 1 }).lean();
 
             return callback(null, results);
           } catch (error) {
             console.error('Error selecting data from MongoDB:', error);
             return callback({ error: 'Error selecting data from MongoDB' });
           }
-};
-
+}
 
 module.exports.select1 =  async (callback) => {
+    const AvgTemperature = -36.7;
+    try {
+      const results = await CityTempIndividual.findOne({ 'AvgTemperature' : AvgTemperature }, { _id: 0, City: 1, Day: 1,
+        Month: 1,
+        Year: 1,
+        AvgTemperature: 1 }).lean();
+      return callback(null, results);
+    } catch (error) {
+          console.error('Error deleting data into MongoDB:', error);
+          return callback({ error: 'Error deleting data into MongoDB' });
+    }
+}
+
+module.exports.select2 =  async (callback) => {
       try {
             // const query = {
             //       'City': 'Orlando',
@@ -81,25 +95,27 @@ module.exports.select1 =  async (callback) => {
             //   ];
               
             const query = {
-                  'City': 'Orlando',
-                  'Temperatures.Day': 1,
-                  'Temperatures.Month': 1,
-                  'Temperatures.Year': 1995
-              };
+              'City': 'Seattle',
+              'Temperatures.Day': 8,
+              'Temperatures.Month': 3,
+              'Temperatures.Year': 1997
+            };
 
-             const results =  await CityTemperature.find(query).lean();
+             const results =  await CityTemperature.find((query), { _id: 1, City: 1, Region: 1,
+              Country: 1}).lean();
 
             return callback(null, results);
           } catch (error) {
             console.error('Error selecting data from MongoDB:', error);
             return callback({ error: 'Error selecting data from MongoDB' });
           }
-};
+}
 
-module.exports.select2 =  async (callback) => {
+module.exports.select3 =  async (callback) => {
+  const city = 'Seattle';
       try {
             const results =  await CityTemperature.aggregate([
-                  { $match: { City: 'Orlando' } },
+                  { $match: { City: city } },
                   { $unwind: "$Temperatures" },
                   {
                     $group: {
@@ -114,9 +130,9 @@ module.exports.select2 =  async (callback) => {
             console.error('Error selecting data from MongoDB:', error);
             return callback({ error: 'Error selecting data from MongoDB' });
           }
-};
+}
 
-module.exports.select3 =  async (callback) => {
+module.exports.select4 =  async (callback) => {
       try {            
             const results = await CityTemperature.aggregate([
                   { 
@@ -124,12 +140,11 @@ module.exports.select3 =  async (callback) => {
                   {
                       $group: {
                           _id: "$City",
-                          city: { $first: "$_id" },
                           max_temperature: { $max: "$Temperatures.AvgTemperature" },
                           min_temperature: { $min: "$Temperatures.AvgTemperature" }
                       }
                   }
-              ]);
+              ]).exec();
               
             // const results = await CityTemperature.aggregate(pipeline);
 
@@ -138,20 +153,20 @@ module.exports.select3 =  async (callback) => {
             console.error('Error selecting data from MongoDB:', error);
             return callback({ error: 'Error selecting data from MongoDB' });
           }
-};
+}
 
 
-module.exports.select4 =  async (callback) => {
+module.exports.select5 =  async (callback) => {
       try {            
             const results = await CityTemperature.aggregate([
                   {
-                      $unwind: "$Temperatures" // Deconstruct the Temperatures array
+                      $unwind: "$Temperatures"
                   },
                   {
                       $group: {
                           _id: "$City",
-                          maxTemp: { $max: "$Temperatures.AvgTemperature" }, // Calculate max temperature
-                          minTemp: { $min: "$Temperatures.AvgTemperature" }  // Calculate min temperature
+                          maxTemp: { $max: "$Temperatures.AvgTemperature" }, 
+                          minTemp: { $min: "$Temperatures.AvgTemperature" } 
                       }
                   },
                   {
@@ -164,7 +179,7 @@ module.exports.select4 =  async (callback) => {
                   {
                       $sort: { temp_fluctuation: -1 } // Sort by temp_fluctuation in descending order
                   }
-              ]);
+              ]).exec();
               
               return callback(null, results);
             
@@ -172,6 +187,6 @@ module.exports.select4 =  async (callback) => {
             console.error('Error selecting data from MongoDB:', error);
             return callback({ error: 'Error selecting data from MongoDB' });
           }
-};
+}
 
     

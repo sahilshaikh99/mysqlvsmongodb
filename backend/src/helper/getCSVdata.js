@@ -3,7 +3,6 @@ const fs = require('fs');
 
 // Function to insert data into MongoDB
 module.exports.getCSVdata = async (volume) => {
-    // Define CSV file path
 
     const filePath = process.env.DATA_FILE + ".csv";
     const MAX_RECORDS = volume; // Maximum number of records to process
@@ -43,20 +42,21 @@ module.exports.getCSVdata = async (volume) => {
 module.exports.getCSVdataNested = async (volume) => {
   const filePath = process.env.DATA_FILE + ".csv";
   const MAX_RECORDS = volume;
-  const cityMap = new Map(); // To store city data
+  const cityMap = new Map(); 
+  var counter = 0;
+  console.log('hello');
 
   return new Promise((resolve, reject) => {
       fs.createReadStream(filePath)
           .pipe(csv())
           .on('data', (data) => {
-              if (cityMap.size >= MAX_RECORDS) {
+              if (counter >= MAX_RECORDS) {
                   // Stop reading from the file if maximum records reached
                   resolve(Array.from(cityMap.values()));
                   return;
               }
               const cityKey = `${data.Region}-${data.Country}-${data.State || ''}-${data.City}`;
               if (!cityMap.has(cityKey)) {
-                  // If city data doesn't exist in map, initialize it
                   cityMap.set(cityKey, {
                       City: data.City,
                       State: data.State || '',
@@ -65,13 +65,13 @@ module.exports.getCSVdataNested = async (volume) => {
                       Temperatures: []
                   });
               }
-              // Add temperature data to the Temperatures array
               cityMap.get(cityKey).Temperatures.push({
                   Day: data.Day,
                   Month: data.Month,
                   Year: data.Year,
                   AvgTemperature: data.AvgTemperature
               });
+              counter++;
           })
           .on('end', () => resolve(Array.from(cityMap.values())))
           .on('error', reject);
@@ -98,7 +98,6 @@ module.exports.getCSVCityData = async (volume) => {
                     return;
                 }
 
-                // Extract city data
                 const city = {
                     name: data.City,
                     country: data.Country,
@@ -109,8 +108,8 @@ module.exports.getCSVCityData = async (volume) => {
                 // Check if the city already exists in the set
                 const cityKey = `${city.name}_${city.country}_${city.state}_${city.region}`;
                 if (!citiesSet.has(cityKey)) {
-                    cities.push(city); // Add city to the array
-                    citiesSet.add(cityKey); // Add city to the set
+                    cities.push(city); 
+                    citiesSet.add(cityKey);
                 }
 
                 recordCount++;
@@ -138,10 +137,8 @@ module.exports.getCSVTemperatureData = async (volume, cityIdMap) => {
                   return;
               }
 
-              // Normalize city name
               const cityName = data.City.trim().toLowerCase();
 
-              // Check if city exists in cityIdMap
               if (cityIdMap.has(cityName)) {
                   const city_id = cityIdMap.get(cityName);
                   const temperature = {
