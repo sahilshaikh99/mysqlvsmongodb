@@ -3,10 +3,10 @@ const CityTempIndividual = require('../../models/rowData/rowDataModel');
 
 module.exports.update =  async (callback) => {
       try {
-            const newTemperature = 80.0;
+            const newTemperature = 80;
       
             const result = await CityTempIndividual.updateOne(
-                  { _id:  "6623439a83d7e8f64f6e618c"},
+                  { _id:  "6627405c41fea274448e83d2"},
                   { $set: { "AvgTemperature": newTemperature } });
 
             return callback(null,);
@@ -20,9 +20,9 @@ module.exports.update =  async (callback) => {
 
 module.exports.update1 =  async (callback) => {
       try {             
-            const AvgTemperature = -36.7;
+            const AvgTemperature = 80;
 
-            const newTemperature = 90.0;
+            const newTemperature = 90;
 
             const result = await CityTempIndividual.updateOne({ 'AvgTemperature' : AvgTemperature }, 
             { $set: { "AvgTemperature": newTemperature } } );
@@ -37,14 +37,15 @@ module.exports.update1 =  async (callback) => {
     
 module.exports.update2 =  async (callback) => {
       try {
-            const cityName = "Seattle";
-            const day = 8;
-
-            const newTemperature = 79.0;
+            const cityName = "Algiers";
+            const day = 31;
+            const month = 7;
+            const year = 2013; 
+            const newTemperature = 79;
             
 
             const result = await CityTemperature.updateOne(
-            { "City": cityName, "Temperatures.Day": day },
+            { "City": cityName, "Temperatures.Day": day,  "Temperatures.Month": month, "Temperatures.Year": year},
             { $set: { "Temperatures.$.AvgTemperature": newTemperature } });
       
             return callback(null,);

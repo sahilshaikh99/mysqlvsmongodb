@@ -3,7 +3,7 @@ const CityTempIndividual = require('../../models/rowData/rowDataModel');
 
 module.exports.delete = async (callback) => {
   try {
-      await CityTempIndividual.deleteOne({ _id: "6623439a83d7e8f64f6e618c" });
+      await CityTempIndividual.deleteOne({ _id: "6627405c41fea274448e83d2" });
       return callback(null,);
   } catch (error) {
         console.error('Error deleting data into MongoDB:', error);
@@ -12,7 +12,7 @@ module.exports.delete = async (callback) => {
 }
 
 module.exports.delete1 = async (callback) => {
-      const AvgTemperature = -36.7;
+      const AvgTemperature = 140;
       try {
           await CityTempIndividual.deleteOne({ 'AvgTemperature' : AvgTemperature });
           return callback(null,);
@@ -25,13 +25,14 @@ module.exports.delete1 = async (callback) => {
 
 module.exports.delete2 = async (callback) => {
       try {
-            const day = 8;
-            const year = 1997; 
-            const city = "Seattle";
+            const day = 31;
+            const year = 2013; 
+            const month = 7;
+            const city = "San Juan Puerto Rico";
  
             await CityTemperature.updateOne(
                 { "City": city },
-                { $pull: { "Temperatures": { "Day": day, "Year": year } }});
+                { $pull: { "Temperatures": { "Day": day, "Year": year, "Month": month } }});
             return callback(null,);
         } catch (error) {
               console.error('Error deleting data into MongoDB:', error);

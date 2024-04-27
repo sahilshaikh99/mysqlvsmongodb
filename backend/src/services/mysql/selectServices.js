@@ -3,7 +3,7 @@ const mysqlConnection = require('../../config/db');
 module.exports.select =  async (callback) => {
 
   try {
-      const query = `SELECT * FROM city_temp_individual WHERE id = '2807688' limit 1`;
+      const query = `SELECT * FROM city_temp_individual WHERE id = '2906327' limit 1`;
 
       mysqlConnection.query(query, (error, results) => {
             if (error) {
@@ -20,7 +20,7 @@ module.exports.select =  async (callback) => {
 
 module.exports.select1 =  async (callback) => {
   try {
-        const temperature = -36.70;
+        const temperature = 140.00;
         
       const query = `SELECT * FROM city_temp_individual WHERE AvgTemperature = ? limit 1`;
 
@@ -44,7 +44,7 @@ module.exports.select2 =  async (callback) => {
           SELECT t.*, c.name AS city_name, c.country, c.region
           FROM temperature t
           JOIN city c ON t.city_id = c.city_id
-          WHERE t.city_id = 1967274 AND t.day = 8 AND t.month = 3 AND t.year = 1997
+          WHERE t.city_id = 1971834 AND t.day = 31 AND t.month = 7 AND t.year = 2013
         `;
         
         mysqlConnection.query(query, (error, results) => {
@@ -62,7 +62,7 @@ module.exports.select2 =  async (callback) => {
 
     module.exports.select3 =  async (callback) => {
       try {
-          const query = `SELECT city_id, AVG(avg_temperature) AS avg_temp FROM temperature where city_id = 1967274 GROUP BY city_id`;
+          const query = `SELECT city_id, AVG(avg_temperature) AS avg_temp FROM temperature where city_id = 1971834 GROUP BY city_id`;
     
         mysqlConnection.query(query, (error, results) => {
           if (error) {

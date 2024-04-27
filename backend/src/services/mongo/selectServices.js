@@ -5,7 +5,7 @@ const CityTempIndividual = require('../../models/rowData/rowDataModel');
 
 module.exports.select =  async (callback) => {
       try {
-             const results =  await CityTempIndividual.findOne({ _id: "6623439a83d7e8f64f6e618c" }, { _id: 1, City: 1, Day: 1,
+             const results =  await CityTempIndividual.findOne({ _id: "662706e5458da8c3919d6a36" }, { _id: 1, City: 1, Day: 1,
               Month: 1,
               Year: 1,
               AvgTemperature: 1 }).lean();
@@ -18,7 +18,7 @@ module.exports.select =  async (callback) => {
 }
 
 module.exports.select1 =  async (callback) => {
-    const AvgTemperature = -36.7;
+    const AvgTemperature = 140;
     try {
       const results = await CityTempIndividual.findOne({ 'AvgTemperature' : AvgTemperature }, { _id: 0, City: 1, Day: 1,
         Month: 1,
@@ -95,10 +95,10 @@ module.exports.select2 =  async (callback) => {
             //   ];
               
             const query = {
-              'City': 'Seattle',
-              'Temperatures.Day': 8,
-              'Temperatures.Month': 3,
-              'Temperatures.Year': 1997
+              'City': 'San Juan Puerto Rico',
+              'Temperatures.Day': 31,
+              'Temperatures.Month': 7,
+              'Temperatures.Year': 2013
             };
 
              const results =  await CityTemperature.find((query), { _id: 1, City: 1, Region: 1,
@@ -112,7 +112,7 @@ module.exports.select2 =  async (callback) => {
 }
 
 module.exports.select3 =  async (callback) => {
-  const city = 'Seattle';
+  const city = 'San Juan Puerto Rico';
       try {
             const results =  await CityTemperature.aggregate([
                   { $match: { City: city } },
@@ -145,8 +145,6 @@ module.exports.select4 =  async (callback) => {
                       }
                   }
               ]).exec();
-              
-            // const results = await CityTemperature.aggregate(pipeline);
 
             return callback(null, results);
           } catch (error) {
@@ -155,38 +153,27 @@ module.exports.select4 =  async (callback) => {
           }
 }
 
-
-module.exports.select5 =  async (callback) => {
-      try {            
-            const results = await CityTemperature.aggregate([
-                  {
-                      $unwind: "$Temperatures"
-                  },
-                  {
-                      $group: {
-                          _id: "$City",
-                          maxTemp: { $max: "$Temperatures.AvgTemperature" }, 
-                          minTemp: { $min: "$Temperatures.AvgTemperature" } 
-                      }
-                  },
-                  {
-                      $project: {
-                          City: "$_id",
-                          temp_fluctuation: { $subtract: ["$maxTemp", "$minTemp"] },
-                          _id: 0 
-                      }
-                  },
-                  {
-                      $sort: { temp_fluctuation: -1 } // Sort by temp_fluctuation in descending order
+module.exports.select5 = async (callback) => {
+  try {
+      const results = await CityTemperature.aggregate([
+          { $unwind: "$Temperatures" },
+          {
+              $group: {
+                  _id: "$City",
+                  temp_fluctuation: {
+                      $subtract: [
+                          { $max: "$Temperatures.AvgTemperature" },
+                          { $min: "$Temperatures.AvgTemperature" }
+                      ]
                   }
-              ]).exec();
-              
-              return callback(null, results);
-            
-          } catch (error) {
-            console.error('Error selecting data from MongoDB:', error);
-            return callback({ error: 'Error selecting data from MongoDB' });
-          }
-}
+              }
+          },
+          { $sort: { temp_fluctuation: -1 } }
+      ]).exec();
 
-    
+      return callback(null, results);
+  } catch (error) {
+      console.error('Error selecting data from MongoDB:', error);
+      return callback({ error: 'Error selecting data from MongoDB' });
+  }
+}

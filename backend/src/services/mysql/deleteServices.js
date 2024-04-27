@@ -4,7 +4,7 @@ module.exports.delete = async (callback) => {
       try {
         const query = `
             DELETE FROM city_temp_individual
-            WHERE id = 2807688
+            WHERE id = 2906327
             LIMIT 1`;
     
         mysqlConnection.query(query, (error, results) => {
@@ -25,7 +25,7 @@ module.exports.delete1 = async (callback) => {
       try {
         const query = `
             DELETE FROM city_temp_individual
-            WHERE AvgTemperature = -36.70
+            WHERE AvgTemperature = 140.00
             LIMIT 1`;
             
         mysqlConnection.query(query, (error, results) => {
@@ -48,9 +48,10 @@ module.exports.delete2 =  async (callback) => {
               DELETE t
               FROM temperature t
               JOIN city c ON t.city_id = c.city_id
-              WHERE t.day = 8
-              AND t.year = 1997
-              AND c.name = 'Seattle'
+              WHERE t.day = 31
+              AND t.year = 2013
+              AND t.month = 7
+              AND c.name = 'San Juan Puerto Rico'
             `;
         
             mysqlConnection.query(query, (error, results) => {

@@ -4,14 +4,14 @@ const { processCSVFile } = require('../../helper/getTestData');
 module.exports.insertData = async (data, callback) => {
   try {
 
-    const oneData = await processCSVFile(`/Users/mohammadsahilshaikh/Desktop/project/experiments-data/insert/${data.database}/${data.experiment}/data.csv`, data.threads);
-    const tenData = await processCSVFile(`/Users/mohammadsahilshaikh/Desktop/project/experiments-data/insert/${data.database}/${data.experiment}/data.csv`, data.threads);
-    const hundredData = await processCSVFile(`/Users/mohammadsahilshaikh/Desktop/project/experiments-data/insert/${data.database}/${data.experiment}/data.csv`, data.threads);
-    const thousandData = await processCSVFile(`/Users/mohammadsahilshaikh/Desktop/project/experiments-data/insert/${data.database}/${data.experiment}/data.csv`, data.threads);
-    const tenThousandData = await processCSVFile(`/Users/mohammadsahilshaikh/Desktop/project/experiments-data/insert/${data.database}/${data.experiment}/data.csv`, data.threads);
-    const hundredThousandData = await processCSVFile(`/Users/mohammadsahilshaikh/Desktop/project/experiments-data/insert/${data.database}/${data.experiment}/data.csv`, data.threads);
-    const oneMillionData = await processCSVFile(`/Users/mohammadsahilshaikh/Desktop/project/experiments-data/insert/${data.database}/${data.experiment}/data.csv`, data.threads);
-    const threeMillionData = await processCSVFile(`/Users/mohammadsahilshaikh/Desktop/project/experiments-data/insert/${data.database}/${data.experiment}/data.csv`, data.threads);
+    const oneData = await processCSVFile(`/Users/mohammadsahilshaikh/Desktop/project/experiments-data/insert/${data.database}/${data.experiment}/1data/aggregatedata.csv`, 1);
+    const tenData = await processCSVFile(`/Users/mohammadsahilshaikh/Desktop/project/experiments-data/insert/${data.database}/${data.experiment}/10data/aggregatedata.csv`, 10);
+    const hundredData = await processCSVFile(`/Users/mohammadsahilshaikh/Desktop/project/experiments-data/insert/${data.database}/${data.experiment}/100data/aggregatedata.csv`, 100);
+    const thousandData = await processCSVFile(`/Users/mohammadsahilshaikh/Desktop/project/experiments-data/insert/${data.database}/${data.experiment}/1000data/aggregatedata.csv`, 1000);
+    const tenThousandData = await processCSVFile(`/Users/mohammadsahilshaikh/Desktop/project/experiments-data/insert/${data.database}/${data.experiment}/10000data/aggregatedata.csv`, 10000);
+    const hundredThousandData = await processCSVFile(`/Users/mohammadsahilshaikh/Desktop/project/experiments-data/insert/${data.database}/${data.experiment}/100000data/aggregatedata.csv`, 100000);
+    const oneMillionData = await processCSVFile(`/Users/mohammadsahilshaikh/Desktop/project/experiments-data/insert/${data.database}/${data.experiment}/1000000data/aggregatedata.csv`, 1000000);
+    const threeMillionData = await processCSVFile(`/Users/mohammadsahilshaikh/Desktop/project/experiments-data/insert/${data.database}/${data.experiment}/3000000data/aggregatedata.csv`, 3000000);
 
     let jsonData = fs.readFileSync('testData.json');
     let existingData = JSON.parse(jsonData);

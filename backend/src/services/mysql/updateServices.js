@@ -2,7 +2,7 @@ const mysqlConnection = require('../../config/db');
 
 module.exports.update =  async (callback) => {
       try {
-          const id = 2807688;
+          const id = 2906327;
           const newTemperature = 80.0;
           
           const query = `UPDATE city_temp_individual 
@@ -29,7 +29,7 @@ module.exports.update =  async (callback) => {
             
             const query = `UPDATE city_temp_individual 
             SET AvgTemperature = ?
-            WHERE AvgTemperature = -36.70
+            WHERE AvgTemperature = 80.00
             LIMIT 1`;
             
             mysqlConnection.query(query, [newTemperature], (error, results, fields) => {
@@ -47,16 +47,18 @@ module.exports.update =  async (callback) => {
 
 module.exports.update2 =  async (callback) => {
   try {
-      const cityName = "Seattle";
-      const day = 8;
+      const cityName = "San Juan Puerto Rico";
+      const day = 31;
+      const month = 7;
+      const year = 2013; 
       const newTemperature = 79.20;
       
       const query = `UPDATE temperature t
         JOIN city c ON t.city_id = c.city_id
         SET t.avg_temperature = ?
-        WHERE c.name = ? AND t.day = ?`;
+        WHERE c.name = ? AND t.day = ? AND t.month = ? AND t.year = ?`;
       
-      mysqlConnection.query(query, [newTemperature, cityName, day], (error, results, fields) => {
+      mysqlConnection.query(query, [newTemperature, cityName, day, month, year], (error, results, fields) => {
             if (error) {
               console.error('Error updating data:', error);
               return callback(error);
