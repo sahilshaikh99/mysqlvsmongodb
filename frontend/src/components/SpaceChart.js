@@ -1,88 +1,3 @@
-// import React, { useEffect, useRef } from 'react';
-// import Chart from 'chart.js/auto';
-// import { CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-
-// // Register necessary components with Chart
-// Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
-
-// export function MyChart({title = "Chart.js Bar Chart", labels = ['100', '1000', '10000', '100000', '1000000', '3000000'], mongoData = [10, 15, 20, 18, 25, 22, 30], mysqlData = [15, 20, 25, 22, 30, 28, 35]}) {
-//   const chartRef = useRef(null);
-
-//   const data = {
-//     labels,
-//     datasets: [
-//       {
-//         label: 'MongoDB',
-//         data: mongoData,
-//         fill: false,
-//         backgroundColor: 'rgba(75, 192, 192, 0.2)',
-//         borderColor: 'rgba(75, 192, 192, 1)',
-//         borderWidth: 2,
-//       },
-//       {
-//         label: 'MySQL',
-//         data: mysqlData,
-//         fill: false,
-//         backgroundColor: 'rgba(192, 75, 192, 0.2)',
-//         borderColor: 'rgba(192, 75, 192, 1)',
-//         borderWidth: 2,
-//       },
-//     ],
-//   };
-
-//   useEffect(() => {
-//     let myChart = null;
-
-//     if (chartRef && chartRef.current) {
-//       const ctx = chartRef.current.getContext('2d');
-
-//       if (myChart) {
-//         myChart.destroy();
-//       }
-
-//       myChart = new Chart(ctx, {
-//         type: 'bar',
-//         data: data,
-//         options: {
-//           responsive: true,
-//           plugins: {
-//             legend: {
-//               position: 'top',
-//             },
-//             title: {
-//               display: true,
-//               text: title,
-//             },
-//           },
-//           scales: {
-//             x: {
-//               title: {
-//                 display: true,
-//                 text: 'Database Records', 
-//               },
-//             },
-//             y: {
-//               title: {
-//                 display: true,
-//                 text: 'Time in Milliseconds', 
-//               },
-//             },
-//           },
-//         },
-//       });
-//     }
-
-//     return () => {
-//       if (myChart) {
-//         myChart.destroy();
-//       }
-//     };
-//   }, []);
-
-//   return <canvas ref={chartRef} />;
-// }
-
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 import { CategoryScale, LinearScale, LineElement, Title, Tooltip, Legend } from 'chart.js';
@@ -92,7 +7,7 @@ Chart.register(ChartDataLabels);
 // Register necessary components with Chart
 Chart.register(CategoryScale, LinearScale, LineElement, Title, Tooltip, Legend);
 
-export function MyChart({ title = "Chart.js Line Chart", labels = ['100', '1000', '10000', '100000', '1000000', '3000000'], mongoData = [10, 15, 20, 18, 25, 22, 30], mysqlData = [15, 20, 25, 22, 30, 28, 35] }) {
+export function SpaceChart({ title = "Chart.js Line Chart", labels = ['100', '1000', '10000', '100000', '1000000', '3000000'], mongoData = [10, 15, 20, 18, 25, 22, 30], mysqlData = [15, 20, 25, 22, 30, 28, 35] }) {
   const chartRef = useRef(null);
 
   const data = {
@@ -131,9 +46,6 @@ export function MyChart({ title = "Chart.js Line Chart", labels = ['100', '1000'
         myChart.destroy();
       }
 
-      // Determine if any value in mongoData or mysqlData exceeds 1500 ms
-      const displayInMilliseconds = !(mongoData.some(value => value > 1500) || mysqlData.some(value => value > 1500));
-
       myChart = new Chart(ctx, {
         type: 'line', 
         data: data,
@@ -155,13 +67,6 @@ export function MyChart({ title = "Chart.js Line Chart", labels = ['100', '1000'
                 size: 25 
               }
             },
-            tooltip: {
-              callbacks: {
-                label: function (context) {
-                  return `Value: ${context.parsed.y} ${displayInMilliseconds ? 'ms' : 's'}`; // Customize tooltip label
-                },
-              },
-            },
             datalabels: {
               backgroundColor: function(context) {
                 return context.dataset.backgroundColor;
@@ -173,9 +78,7 @@ export function MyChart({ title = "Chart.js Line Chart", labels = ['100', '1000'
                 size: 25
               },
               formatter: function (value, context) {
-                // Convert to seconds if displayInMilliseconds is false
-                const displayValue = displayInMilliseconds ? value + " ms" : (value / 1000).toFixed(2) + " s";
-                return displayValue;
+                return value + " MB";;
               },
               padding: 6,
               align: function(context) {
@@ -192,7 +95,7 @@ export function MyChart({ title = "Chart.js Line Chart", labels = ['100', '1000'
                 display: true,
                 text: 'Database Records',
                 font: {
-                  size: 25 // Increase font size for x-axis labels
+                  size: 25 
                 }
               },
               position: 'bottom',      
@@ -200,16 +103,16 @@ export function MyChart({ title = "Chart.js Line Chart", labels = ['100', '1000'
                  padding: 25,
                  color: 'black',
                  font: {
-                  size: 25 // Increase font size for x-axis labels
+                  size: 25 
                 }
               }
             },
             y: {
               title: {
                 display: true,
-                text: displayInMilliseconds ? "Time in Milliseconds" : "Time in Seconds", // Dynamic y-axis title
+                text: "Size in MB",
                 font: {
-                  size: 25 // Increase font size for x-axis labels
+                  size: 25 
                 }
               },
               grid: {
@@ -219,11 +122,10 @@ export function MyChart({ title = "Chart.js Line Chart", labels = ['100', '1000'
               ticks: {
                 color: 'black',
                 font: {
-                  size: 25 // Increase font size for x-axis labels
+                  size: 25 
                 },
                 callback: function (value) {
-                  // Convert to seconds if displayInMilliseconds is false
-                  return displayInMilliseconds ? value + " ms" : (value / 1000).toFixed(2) + " s";
+                  return value + "MB";
                 },
               },
             },
@@ -239,7 +141,7 @@ export function MyChart({ title = "Chart.js Line Chart", labels = ['100', '1000'
           layout: {
             padding: {
               bottom: 10, // Adjust bottom padding to move x-axis labels further below
-              top: 1 // Reduce top padding to maintain chart size
+              top: 5 // Reduce top padding to maintain chart size
             }
           },
         },
